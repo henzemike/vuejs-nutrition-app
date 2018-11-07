@@ -12,7 +12,16 @@
         </div>
         <div class="form-group">
           <label>Search Ingredient:</label> 
-          <input type="text" class="form-control" v-model="ingredients">
+          <div>
+              <vue-tags-input
+                v-model="tag"
+                :tags="tags"
+                :autocomplete-items="filteredItems"
+                @tags-changed="newTags => tags = newTags">
+              </vue-tags-input>
+              <p>{{tags}}</p>
+            </div>
+          <!-- <input type="text" class="form-control" v-model="ingredients"> -->
         </div><br>
         <div class="form-group">
           <!-- user types directions for creating meal -->
@@ -27,25 +36,41 @@
 
 <script>
 import axios from "axios";
+import VueTagsInput from '@johmun/vue-tags-input';
 
 export default {
+  components: {
+    VueTagsInput,
+  },
   data: function() {
     return {
       mealName: "",
       instructions: "",
-      ingredients: [],
-      errors: []
+      errors: [],
+      tag: '',
+      tags: [],
+      autocompleteItems: []
     };
+  },
+  created: function() {
+    axios.get("http://localhost:3000/api/ingredients").then(response => {
+        this.autocompleteItems = response.data.map(a => {
+          return { text: a.name, id: a.id };
+        });
+      })
+      .catch(error => {
+        this.errors = error.response.data.errors;
+      });
   },
   methods: {
     submit: function() {
-      var mealParams = {
+      var params = {
         name: this.mealName,
-        ingredients: this.ingredients,
-        recipe_instructions: this.instructions
+        ingredients: this.tags.map(a => [a.text]),
+        recipe_instructions: this.instructions,
       };
       axios
-        .post("http://localhost:3000/api/meals", mealParams)
+        .post("http://localhost:3000/api/meals", params)
         .then(response => {
           this.$router.push("/users/me");
         })
@@ -54,6 +79,11 @@ export default {
         });
     }
 
-  }
+  },
+  computed: {
+    filteredItems() {
+      return this.autocompleteItems.filter(i => new RegExp(this.tag, 'i').test(i.text));
+    },
+  },
 };
 </script>
