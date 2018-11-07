@@ -53,11 +53,11 @@ export default {
     };
   },
   created: function() {
-    axios.get("http://localhost:3000/api/ingredients").then(response => {
-        this.autocompleteItems = response.data.map(a => {
-          return { text: a.name, id: a.id };
-        });
-      })
+    axios.get("http://localhost:3000/api/ingredients").then( response => {
+      this.autocompleteItems = response.data.map(a => {
+        return { text: a.name, id: a.id };
+      });
+    })
       .catch(error => {
         this.errors = error.response.data.errors;
       });
