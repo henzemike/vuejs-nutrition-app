@@ -13,7 +13,6 @@
         <div class="form-group">
           <label>Search Ingredient:</label> 
           <input type="text" class="form-control" v-model="ingredients">
-          <input type="submit" class="btn btn-primary" value="Add Ingredient">
         </div><br>
         <div class="form-group">
           <!-- user types directions for creating meal -->

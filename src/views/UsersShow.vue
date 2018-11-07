@@ -7,56 +7,46 @@
     <!-- end current user info -->
 
     <!-- daily meals template -->
-    <div class="meal-log">
-      <ul>
-        <li>Breakfast
-          <ul>
-            <li>{{meals[0]["name"]}}</li>
-          </ul>
-        </li>
-        <li>Snack
-          <ul>
-            <li>{{meals[1]["name"]}}</li>
-          </ul>
-        </li>
-        <li>Lunch
-          <ul>
-            <li>{{meals[2]["name"]}}</li>
-          </ul>
-        </li>
-        <li>Snack
-          <ul>
-            <li>{{meals[3]["name"]}}</li>
-          </ul>
-        </li>
-        <li>Dinner
-          <ul>
-            <li>{{meals[4]["name"]}}</li>
-          </ul>
-        </li>
-      </ul>
+    <!-- add modal for new meal -->
+    <div class="container">
+      <div class="row">
+        <div class="border border-dark col">
+          <!-- modal button will be breakfast -->
+          <h4>Breakfast</h4>
+          <!-- after meal is created it will populate the meal name -->
+            <p>{{meals[0]["name"]}}</p>
+          <h4>Snack</h4>
+            <p>{{meals[1]["name"]}}</p>      
+          <h4>Lunch</h4>
+            <p>{{meals[2]["name"]}}</p>         
+          <h4>Snack</h4>
+            <p>{{meals[3]["name"]}}</p>     
+          <h4>Dinner</h4>
+            <p>{{meals[4]["name"]}}</p> 
+        </div>
+        <!-- nutrient % -->
+        <div class="border border-dark col">
+         <h4>Macronutrients</h4>
+         <p>Protein: </p>
+         <p>Carbohydrates: </p>
+         <p>Fats: </p>
+
+         <h4>Micronutrients</h4>
+
+         <h5>Total Daily Nutrients: </h5>
+        </div>
+        <!-- end nutrient % -->
+      </div>
     </div>
     <!-- end daily meals template -->
 
-    <!-- nutrient % -->
-      <div class="nutrients">
-       <h3>Macronutrients</h3>
-       <p>Protein: </p>
-       <p>Carbohydrates: </p>
-       <p>Fats: </p>
-
-
-       <h3>Micronutrients</h3>
-
-       <h3>Total Daily Nutrients: </h3>
-      </div>
-    <!-- end nutrient % -->
+    
 
     <!-- current user meals -->
-    <div v-for="meal in meals">
+    <!-- <div v-for="meal in meals">
       <p>{{meal.name}}</p>
       <p>{{meal.recipe_instructions}}</p>
-    </div>
+    </div> -->
     <!-- end current user meals -->
 
     <!-- meals search -->
@@ -66,21 +56,6 @@
 </template>
 
 <style>
-  .meal-log {
-    width: 300px;
-    border: 5px solid green;
-    padding: 25px;
-    margin: 25px;
-    text-align: left;
-  }
-
-  .nutrients {
-    width: 300px;
-    border: 5px solid green;
-    padding: 25px;
-    margin: 25px;
-    text-align: left;
-  }
 </style>
 
 <script>
@@ -99,7 +74,6 @@
       });
 
       axios.get("http://localhost:3000/api/meals/").then(response => {
-        console.log(response.data);
         this.meals = response.data;
       });
     },
