@@ -14,8 +14,8 @@
           <!-- modal button will be breakfast -->
           <h4>Breakfast</h4>
           <!-- after meal is created it will populate the meal name -->
-            <p>{{tags.text}}</p>
             <!-- Button trigger modal -->
+            <p>{{newMeal.name}}</p>
             <button  type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
               Add Meal
             </button>
@@ -85,7 +85,6 @@
                       </vue-tags-input>
                       <p>{{tags}}</p>
                     </div>
-                  <!-- <input type="text" class="form-control" v-model="ingredients"> -->
                 </div><br>
                 <div class="form-group">
                   <!-- user types directions for creating meal -->
@@ -98,7 +97,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Add Meal</button>
+            <button  type="button" class="btn btn-primary" data-dismiss="modal">Add Meal</button>
           </div>
         </div>
       </div>
@@ -107,10 +106,10 @@
     
 
     <!-- current user meals -->
-    <div v-for="meal in meals">
+    <!-- <div v-for="meal in meals">
       <p>{{meal.name}}</p>
       <p>{{meal.recipe_instructions}}</p>
-    </div>
+    </div> -->
     <!-- end current user meals -->
 
     <!-- meals search -->
@@ -136,6 +135,7 @@
         profile: "User profile page",
         user: {},
         meals: [],
+        newMeal: "",
         // data for new meal
         mealName: "",
         instructions: "",
@@ -150,7 +150,7 @@
         this.user = response.data;
       });
 
-      axios.get("http://localhost:3000/api/meals/").then(response => {
+      axios.get("http://localhost:3000/api/meals").then(response => {
         this.meals = response.data;
       });
 
@@ -174,16 +174,15 @@
         axios
           .post("http://localhost:3000/api/meals", params)
           .then(response => {
-            this.$router.push("/users/me");
+            console.log(response.data);
+            this.newMeal = response.data;
+            // add params with empty string to empty input values
           })
           .catch(error => {
             this.errors = error.response.data.errors;
           });
       },
 
-      displayMealName: function() {
-       return this.tags.text;
-      }
     },
     computed: {
       filteredItems() {
