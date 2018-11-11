@@ -3,7 +3,6 @@
 
    <!-- current user info-->
     <h1>{{ profile }}</h1>
-    <h2>{{user.user_name}}</h2>
     <!-- end current user info -->
 
     <!-- daily meals template -->
@@ -15,11 +14,12 @@
           <h4>Breakfast</h4>
           <!-- after meal is created it will populate the meal name -->
             <!-- Button trigger modal -->
-            <p>{{newMeal.name}}</p>
+            <div>{{newMeal.name}}</div>
             <button  type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
               Add Meal
             </button>
           <h4>Snack</h4>
+            <div>{{newMeal.name}}</div>
             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
               Add Meal
             </button>    
@@ -113,7 +113,9 @@
     <!-- end current user meals -->
 
     <!-- meals search -->
-    <input type="text" placeholder="search meals">
+    <input type="button" value="My Meals"> 
+    <input type="button" value="All Meals">
+
     <!-- end meals search -->
   </div>
 </template>
@@ -168,7 +170,7 @@
       submit: function() {
         var params = {
           name: this.mealName,
-          ingredients: this.tags.map(a => [a.text]),
+          ingredients: this.tags.map(a => a.text),
           recipe_instructions: this.instructions,
         };
         axios

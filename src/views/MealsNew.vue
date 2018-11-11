@@ -66,7 +66,8 @@ export default {
     submit: function() {
       var params = {
         name: this.mealName,
-        ingredients: this.tags.map(a => [a.text]),
+        ingredients: this.tags.map(a => a.text),
+        // map method causing name to be array in string
         recipe_instructions: this.instructions,
       };
       axios

@@ -2,12 +2,13 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/signup">Signup</router-link> |
-      <router-link to="/login">Login</router-link> |
-      <router-link to="/logout">Logout</router-link> |
-      <router-link to="/users/me">Profile Page</router-link> |
-      <router-link to="/meals">New Meal</router-link> 
+      <a v-if="isLoggedIn()"><router-link to="/users/me">{{user.user_name}}</router-link> |</a>
+      <a v-if="isLoggedIn()"><router-link to="/logout">Logout</router-link> |</a>
+      <a v-else><router-link to="/login">Login</router-link> |</a>
+      <a v-if="isLoggedIn()"><router-link to="/meals">New Meal</router-link> |</a> 
+      <a v-else><router-link to="/signup">Signup</router-link> |</a>
+      
+      
 
     </div>
     <router-view/>
@@ -35,3 +36,33 @@
   color: #42b983;
 }
 </style>
+
+
+<script>
+  import axios from "axios";
+
+  export default {
+
+    data: function() {
+      return {
+        user: {}
+      };
+    },
+
+    created: function() {
+      axios.get("http://localhost:3000/api/users/" + this.$route.params.id).then(response => {
+        this.user = response.data;
+      });
+    },
+
+    methods: {
+      isLoggedIn: function() {
+        if (localStorage.getItem("jwt")) {
+          return true;
+        }
+        return false;
+      },
+    },
+    
+  };
+</script>
