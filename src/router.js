@@ -5,7 +5,10 @@ import Signup from './views/Signup.vue';
 import Login from './views/Login.vue';
 import Logout from './views/Logout.vue';
 import UsersShow from './views/UsersShow.vue';
+import UsersEdit from './views/UsersEdit.vue';
 import MealsNew from './views/MealsNew.vue';
+import MealsIndex from './views/MealsIndex.vue';
+
 
 Vue.use(Router)
 
@@ -21,6 +24,8 @@ export default new Router({
        { path: "/login", name: "login", component: Login },
        { path: "/logout", name: "logout", component: Logout },
        { path: "/users/:id", name: "users-show", component: UsersShow },
-       { path: "/meals", name: "meals-new", component: MealsNew }
+       { path: "/users/:id/edit", name: "users-edit", component: UsersEdit },
+       { path: "/meals/edit", name: "meals-new", component: MealsNew },
+       { path: "/meals", name: "meals-index", component: MealsIndex }
   ]
 })
